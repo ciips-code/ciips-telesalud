@@ -54,42 +54,31 @@
 <script>
 
     function actualizarListafiles() {
-        let data = {
-            medic: {
-                name: "medico",
-                files: [
-                    {
-                        description: "Receta",
-                        date_time: "18/10/2022 12:58",
-                        url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        axios.get('{{ route('listFiles', ['vc' => $vc->secret]) }}')
+            .then(function(response) {
+                let html = '';
+                let data = response.data.data;
+               for(const type in data) {
+                   let persona = data[type];
+                    html += '<p class="panel-block has-background-primary-light has-text-primary has-text-weight-bold">' + persona.name + '</p>'
+                    if(persona.files.length > 0) {
+                        persona.files.forEach(function(e, i) {
+                            html+= '<a class="panel-block" target="_blank" href="' + e.url + '">' + e.description + '</a>';
+                        });
+                    } else {
+                        html += '<p class="panel-block">{{ __('views.no_files') }}</p>';
                     }
-                ]
-            },
-            paciente: {
-                name: "paciente",
-                files: [
-                    {
-                        description: "Estudios laboratorio",
-                        date_time: "18/10/2022 13:00",
-                        url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                    }
-                ]
-            }
-        };
-        let html = '';
-        for(const type in data) {
-            let persona = data[type];
-            html += '<p class="panel-block has-background-primary-light has-text-primary has-text-weight-bold">' + persona.name + '</p>'
-            if (persona.files.length > 0) {
-                persona.files.forEach(function (e, i) {
-                    html += '<a target="_blank" class="panel-block" href="' + e.url + '">' + e.description + '</a>';
-                });
-            } else {
-                html += '<p class="panel-block">{{ __('views.no_files') }}</p>';
-            }
-        }
-        document.getElementById('files').innerHTML = html;
+                }
 
+                document.getElementById('files').innerHTML = html;
+            })
+            .catch(function(error) {
+                if(error.response && error.response.status == 409) {
+                    location.reload();
+                }
+                console.log('Error fetching files')
+                console.log(error);
+            });
     }
 
     function openPopupfiles() {
@@ -105,9 +94,95 @@
     }
 
     function cargarfile() {
-        //TODO: send file
+        let listaErrores = [];
+        let valido = true;
+        let description = document.getElementById('description_file').value;
+
+        if(description == '') {
+            valido = false;
+            listaErrores.push('{{ __('views.validation_description') }}');
+        }
+        if(inputfile.value == '') {
+            valido = false;
+            listaErrores.push('{{ __('views.validation_file') }}');
+        }
+
+        if(!valido) {
+            showErrores(listaErrores);
+            return;
+        }
+
+        let btn = document.getElementById('btnCargarfile');
+
+        btn.classList.add('is-loading');
+        btn.disabled = true;
+
+        formData = new FormData();
+        formData.append('description', description);
+        formData.append('vc', '{{ $vc->secret }}');
+        @if($esMedico)
+            formData.append('medic', '{{ $vc->medic_secret }}');
+        @endif
+        formData.append('file', inputfile.files[0]);
+
+        axios.post('{{ route('addFile') }}', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+        })
+          .then((response) => {
+            if(response.data.success) {
+                cerrarPopupfiles();
+                actualizarListafiles();
+            }
+          })
+          .catch((error) => {
+              if(error.response) {
+                  let errores = [];
+                  switch (error.response.status) {
+                      case 400:
+                          console.log(error);
+                          for(e in error.response.data.data) {
+                              error.response.data.data[e].forEach(function(r,i) {
+                                  errores.push(e + ': ' + r);
+                              })
+                          }
+                          break;
+                      case 404:
+                          errores.push('{{ __('views.controllers.vc_not_found') }}');
+                          break;
+                      case 413:
+                          errores.push('{{ __('views.validation_file_size') }}');
+                          break;
+                      default:
+                          errores.push('{{ __('views.unknown_error') }}');
+                  }
+                  showErrores(errores);
+              } else if(error.request) {
+                  console.log(error.request);
+              } else {
+                  console.log(error);
+              }
+          })
+            .then(() => {
+                btn.classList.remove('is-loading');
+                btn.disabled = false;
+            });
     }
 
+    function showErrores(errores) {
+        str = '<p>{{ __('views.file_upload_error') }}:</p>' +
+            '<ul>';
+
+        errores.forEach(function(e,i) {
+            str += '<li>' + e + '</li>';
+        });
+
+        str += '</ul>';
+
+        document.getElementById('span_error_file').innerHTML = str;
+        document.getElementById('error_file').classList.remove('is-hidden');
+    }
 
     const inputfile = document.querySelector('#file');
     inputfile.onchange = () => {
@@ -116,5 +191,13 @@
             fileName.textContent = inputfile.files[0].name;
         }
     }
-    actualizarListafiles();
+
+    var filesInterval;
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        actualizarListafiles();
+        filesInterval = setInterval(function() {
+            actualizarListafiles();
+        }, 15000);
+    });
 </script>
