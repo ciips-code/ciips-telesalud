@@ -56,6 +56,7 @@ class ApiController extends Controller
 
         return $this->success([
             'id' => $vc->secret,
+            'medic_secret' => $vc->medic_secret,
             'valid_from' => $appointmentDate->subMinutes(10),
             'valid_to' => $expirationDate,
             'patient_url' => route('videoconsultation', ['vc' => $secret]),
@@ -75,7 +76,7 @@ class ApiController extends Controller
 
             $files = $vc->files->map(function($item, $key) {
                 return collect([
-                    'type' => $item->medic ? 'medic' : 'paciente',
+                    'type' => $item->medic ? 'medic' : 'patient',
                     'description' => $item->description,
                     'file' => base64_encode(Storage::get($item->file_name))
                 ]);
@@ -83,6 +84,7 @@ class ApiController extends Controller
 
             return $this->success([
                 'id' => $vc->secret,
+                'medic' => $vc->medic_secret,
                 'appointment_date' => $vc->appointment_date,
                 'expiration_date' => $vc->expiration_date,
                 'medic_attendance_date' => $vc->medic_attendance_date,
