@@ -21,7 +21,7 @@
                     <div class="is-flex-grow-3">
                         @include('videoconsultation.sections.files')
                     </div>
-                    <div class="is-align-self-flex-end is-justify-content-center">
+                    <div class="is-flex is-justify-content-center">
                         @include('videoconsultation.sections.finish')
                     </div>
                 </div>
