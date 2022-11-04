@@ -3,18 +3,20 @@ services:
     app:
         build:
             context: .
-            dockerfile: dockerfiles/app.prod.dockerfile
+            dockerfile: dockerfiles/app.dev.dockerfile
         working_dir: /var/www
         volumes:
-            - vcfiles:/var/www/storage/app
+            - ./:/var/www
         depends_on:
             - "database"
 
     web:
         build:
             context: .
-            dockerfile: dockerfiles/web.prod.dockerfile
+            dockerfile: dockerfiles/web.dev.dockerfile
         working_dir: /var/www
+        volumes:
+            - ./:/var/www
         depends_on:
             - "app"
         ports:
@@ -27,11 +29,10 @@ services:
             - dbdata:/var/lib/mysql
         environment:
             MYSQL_DATABASE: ${DB_DATABASE}
-            MYSQL_ROOT_PASSWORD: ChAnGeThIs
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
             MYSQL_PASSWORD: ${DB_PASSWORD}
             MYSQL_USER: ${DB_USERNAME}
         ports:
             - ${DB_LISTEN_PORT:-3306}:3306
 volumes:
     dbdata:
-    vcfiles:
