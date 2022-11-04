@@ -14,6 +14,28 @@
 </div>
 <script>
     function saveEvolution() {
-        
+        let evo = document.getElementById('evolution');
+        let btnGuardar = document.getElementById('btnsaveEvolution');
+
+        evo.disabled = true;
+        btnGuardar.disabled = true;
+        btnGuardar.classList.add('is-loading');
+
+        axios.post('{{ route('saveEvolution') }}', {
+            vc: '{{ $vc->secret }}',
+            medic: '{{ $vc->medic_secret }}',
+            evolution: evo.value,
+        })
+            .then(function(response) {
+
+            })
+            .catch(function (error) {
+                alert('{{ __('views.error_saving_evolution') }}');
+            })
+            .then(function() {
+                evo.disabled = false;
+                btnGuardar.disabled = false;
+                btnGuardar.classList.remove('is-loading');
+            });
     }
 </script>
