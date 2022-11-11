@@ -5,7 +5,7 @@
 @endphp
 
 <script>
-    var api = new JitsiMeetExternalAPI('{{ $parsedUrl['host'] }}', {
+    var api = new JitsiMeetExternalAPI('{{ $parsedUrl['host'] . (isset($parsedUrl['port']) ? ':' . $parsedUrl['port'] : '') }}', {
         roomName: '{{ $vc->secret }}',
         width: '100%',
         height: '100%',

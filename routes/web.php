@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/videoconsultation', [\App\Http\Controllers\VideoconsultationController::class, 'videoconsultation'])
     ->name('videoconsultation');
 
