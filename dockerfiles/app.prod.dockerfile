@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y  \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_mysql zip bcmath -j$(nproc) gd
 
-COPY --chown=www:www-data . /var/www
+COPY --chown=www-data:www-data . /var/www
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
 	php composer-setup.php && \
