@@ -20,3 +20,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 	chmod +x /usr/local/sbin/composer && \
 	rm -rf docker-config dockerfiles docker-compose.yml docker-compose.dev.yml && \
 	chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+
+RUN echo 'post_max_size = 32M' >> "$PHP_INI_DIR/conf.d/docker-env.ini"
+RUN echo 'upload_max_filesize = 32M' >> "$PHP_INI_DIR/conf.d/docker-env.ini"
