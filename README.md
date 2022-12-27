@@ -37,10 +37,13 @@ Las notificaciones se envían a la URL configurada como `POST`, el cuerpo de la 
 Este módulo utiliza Jitsi como servicio de videoconsultas, puede utilizar el [servicio gratuito de Jitsi](https://meet.jit.si/) o una instalación alojada por usted mismo. Revise el parámetro `JITSI_PROVIDER` en el archivo `.env`.   
 Este repositorio contiene una instancia preconfigurada lista para usar. Para más información consulte el [archivo README.md](jitsi-docker/README.md) en el directorio `jitsi-docker`.
 
+### Mesa de ayuda
+Opcionalmente, se puede utilizar una solución de mesa de ayuda brindada por el proyecto [Freescout](https://freescout.net/). Para activar la integración de este módulo con Freescout, configure el parametro `HELPDESK_EMAIL` en el archivo `.env`.  
+Este repositorio contiene una instancia preconfigurada lista para usar. Para más información consulte el [archivo README.md](freescout-docker/README.md) en el directorio `freescout-docker`.
 
 ### Personalización
 Para personalizar esta aplicación, se pueden reemplazar los logos y el favicon, todo se encuentra dentro de la carpeta `public`.   
-Los estilos CSS están basados en [Bulma](https://bulma.io/). Para personalizar los colores se debe recompilar el archivo `public/css/telesalud.bulma.min.css`. Para más información visite la [documentación personalización de Bulma](https://bulma.io/documentation/customize/)
+Los estilos CSS están basados en [Bulma](https://bulma.io/). Para personalizar los colores se debe recompilar el archivo `public/css/telesalud.bulma.min.css`. Para más información visite la [documentación personalización de Bulma](https://bulma.io/documentation/customize/).
 
 ## English
 
@@ -79,7 +82,11 @@ Notifications are sent as a `POST` request, each notification will contain relev
 
 ### Jitsi
 This module uses Jitsi as a backend to run videoconsultations, you can use [Jitsi's free service](https://meet.jit.si/) or a self-hosted instance. Please refer to the `JITSI_PROVIDER` parameter in `.env` file.   
-This repository contains a Jitsi self-hosted instance pre-configured. Please refer to [Jitsi Docker's Readme.md in jitsi-docker directory](jitsi-docker/README.md)
+This repository contains a pre-configured Jitsi self-hosted instance. Please refer to [Jitsi Docker's Readme.md](jitsi-docker/README.md) in `jitsi-docker` directory
+
+### Helpdesk
+Optionally, you can use a helpdesk solution powered by the [Freescout project](https://freescout.net/). In order to enable Freescout integration, please set the `HELPDESK_EMAIL` parameter in `.env` file.  
+This repository contains a pre-configured Freescout instance. Please refer to [Readme.md file](jitsi-docker/README.md) in `freescout-docker` directory.
 
 ### Customization
 To customize this app, you can replace logos and favicon, everything is located in the `public` directory.   
