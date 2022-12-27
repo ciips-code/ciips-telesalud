@@ -216,6 +216,9 @@ return [
     'notifications' => [
         'url' => env('NOTIFICATION_URL'),
         'token' => env('NOTIFICATION_TOKEN'),
-    ]
+    ],
+
+    'helpdesk_email' => env('HELPDESK_EMAIL'),
+
 
 ];

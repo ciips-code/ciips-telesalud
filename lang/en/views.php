@@ -20,9 +20,9 @@ return [
     'file_upload_error' => 'There was an error during file upload',
 
     //Evolucion
-    'evolution' => 'Evolution',
+    'evolution' => 'Medical notes',
     'save' => 'Save',
-    'error_saving_evolution' => 'There was an error saving the evolution',
+    'error_saving_evolution' => 'There was an error saving the medical notes',
 
     //finalizar
     'confirm_finish_vc' => '¿Are you sure you want to finish the videoconsultation?',
@@ -35,6 +35,11 @@ return [
     'medic_will_connect_soon' => 'Your medic will arrive soon. Please wait',
     'welcome_set_attendance' => 'Welcome! Please announce your presence to start',
     'set_attendance' => 'Announce presence',
+
+    //mesa de ayuda
+    'contact_helpdesk_title' => 'Need some help?',
+    'contact_helpdesk_body' => 'You can contact our help desk by sending an email to the following address',
+    'send_email' => 'Send email',
 
     //general
     'vc' => 'Videoconsultation',
