@@ -36,6 +36,11 @@ return [
     'welcome_set_attendance' => '¡Bienvenido! Para empezar, anuncie su presencia',
     'set_attendance' => 'Anunciarme',
 
+    //mesa de ayuda
+    'contact_helpdesk_title' => '¿Necesita ayuda?',
+    'contact_helpdesk_body' => 'Puede contactarse con la mesa de ayuda enviando un correo electrónico a la siguiente dirección:',
+    'send_email' => 'Enviar correo',
+
     //general
     'vc' => 'Videoconsulta',
 ];

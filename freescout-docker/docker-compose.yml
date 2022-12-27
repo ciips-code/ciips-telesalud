@@ -1,0 +1,86 @@
+version: '2'
+
+services:
+  nginx-ssl-proxy:
+    image: danieldent/nginx-ssl-proxy
+    restart: always
+    environment:
+      UPSTREAM: freescout-app
+      SERVERNAME: localhost
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/etc/letsencrypt"
+
+  freescout-app:
+    image: tiredofit/freescout
+    container_name: freescout-app
+    links:
+      - freescout-db
+    volumes:
+      ### If you want to perform customizations to the source and have access to it, then uncomment this line - This includes modules
+      #- ./data:/www/html
+      ### Or, if you just want to use Stock Freescout and hold onto persistent files like cache and session use this, one or the other.
+      - ./data:/data
+      ### If you want to just keep the original source and add additional modules uncomment this line
+      #- ./modules:/www/html/Modules
+      - ./logs/:/www/logs
+    environment:
+      - CONTAINER_NAME=freescout-app
+
+      - VIRTUAL_HOST=localhost
+      - VIRTUAL_NETWORK=nginx-proxy
+      - VIRTUAL_PORT=80
+      # - LETSENCRYPT_HOST=freescout.example.com
+      # - LETSENCRYPT_EMAIL=admin@example.com
+
+      - DB_HOST=freescout-db
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+
+      - SITE_URL=${SITE_URL}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - ADMIN_PASS=${ADMIN_PASS}
+      - ENABLE_SSL_PROXY=${ENABLE_SSL_PROXY}
+      - DISPLAY_ERRORS=${DISPLAY_ERRORS}
+      - TIMEZONE=${TIMEZONE}
+    restart: always
+    # ports:
+      # - "80:80"
+
+  freescout-db:
+    image: tiredofit/mariadb
+    container_name: freescout-db
+    volumes:
+      - ./db:/var/lib/mysql
+    environment:
+      - ROOT_PASS=password
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+
+      - CONTAINER_NAME=freescout-db
+    restart: always
+
+  freescout-db-backup:
+    container_name: freescout-db-backup
+    image: tiredofit/db-backup
+    links:
+     - freescout-db
+    volumes:
+      - ./dbbackup:/backup
+    environment:
+      - CONTAINER_NAME=freescout-db-backup
+      - DB_HOST=freescout-db
+      - DB_TYPE=mariadb
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_DUMP_FREQ=1440
+      - DB_DUMP_BEGIN=0000
+      - DB_CLEANUP_TIME=8640
+      - COMPRESSION=BZ
+      - MD5=TRUE
+    restart: always

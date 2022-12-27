@@ -43,4 +43,8 @@
     @endif
     </div>
 
+    @if(config('app.helpdesk_email'))
+        @include('videoconsultation.sections.helpdesk')
+    @endif
+
 @endsection
