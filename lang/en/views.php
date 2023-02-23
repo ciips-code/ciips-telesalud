@@ -3,38 +3,38 @@
 return [
     //archivos
     'upload_file' => 'Upload file',
-    'description' => 'Description',
+    'description' => 'File description',
     'last_medical_exams' => 'Last medical exams',
-    'file_description_help' => 'Brief description for the file',
+    'file_description_help' => 'Brief file description to upload',
     'file' => 'File',
     'browse' => 'Browse',
-    'supported_formats' => 'Supported formats: :formatos',
+    'supported_formats' => 'File formats supported: :formatos',
     'upload' => 'Upload',
     'cancel' => 'Cancel',
     'files' => 'Files',
-    'no_files' => 'There are no shared files',
-    'validation_description' => 'You must write a description',
+    'no_files' => 'No files have been shared',
+    'validation_description' => 'You must write a file description',
     'validation_file' => 'You must select a file',
     'validation_file_size' => 'File exceeds max file size',
     'unknown_error' => 'Unknown error. Try again later',
     'file_upload_error' => 'There was an error during file upload',
 
     //Evolucion
-    'evolution' => 'Medical notes',
+    'evolution' => 'Clinical note',
     'save' => 'Save',
-    'error_saving_evolution' => 'There was an error saving the medical notes',
+    'error_saving_evolution' => 'There was an error saving the clinical notes',
 
     //finalizar
-    'confirm_finish_vc' => '¿Are you sure you want to finish the videoconsultation?',
-    'finish_vc_effect' => 'Once the consultation is finished, the call will be aborted and you won\'t be able to reestablish it',
-    'finish' => 'Finish',
-    'finish_vc' => 'Finish consultation',
+    'confirm_finish_vc' => 'Are you sure you want to conclude the telehealth visit?',
+    'finish_vc_effect' => 'After ending the telehealth visit, the call will be disconnected and cannot be re-established',
+    'finish' => 'End',
+    'finish_vc' => 'Conclude the telehealth visit',
 
     //espera
-    'waiting_medic' => 'Waiting for your medic',
-    'medic_will_connect_soon' => 'Your medic will arrive soon. Please wait',
-    'welcome_set_attendance' => 'Welcome! Please announce your presence to start',
-    'set_attendance' => 'Announce presence',
+    'waiting_medic' => 'Waiting for the Healthcare provider',
+    'medic_will_connect_soon' => 'Your provider will be online shortly. Please wait',
+    'welcome_set_attendance' => 'Welcome! To start, please announce your presence',
+    'set_attendance' => 'Announce myself',
 
     //mesa de ayuda
     'contact_helpdesk_title' => 'Need some help?',
@@ -42,5 +42,5 @@ return [
     'send_email' => 'Send email',
 
     //general
-    'vc' => 'Videoconsultation',
+    'vc' => 'Telehealth visit',
 ];
