@@ -84,6 +84,11 @@ return [
 
     'locale' => env('LANGUAGE', 'es'),
 
+    'available_locales' => [
+        env('LANGUAGE', 'es') == 'es' ? 'es' : 'en',
+        env('LANGUAGE', 'es') == 'es' ? 'en' : 'es',
+        ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
