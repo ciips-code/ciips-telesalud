@@ -10,6 +10,9 @@ services:
             - ./:/var/www
         depends_on:
             - "database"
+        networks:
+            default:
+            vc:
 
     web:
         restart: unless-stopped

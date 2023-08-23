@@ -1,7 +1,13 @@
 <?php
 
 function notify(\App\Models\Videoconsultation $videoconsultation, $topic) {
-    if($url = config('app.notifications.url')) {
+    if(is_array($videoconsultation->extra) && isset($videoconsultation->extra['notification_url'])) {
+        $url = $videoconsultation->extra['notification_url'];
+    } else {
+        $url = config('app.notifications.url');
+    }
+
+    if($url) {
         $request = \Illuminate\Support\Facades\Http::asJson();
         if($token = config('app.notifications.token')) {
             $request->withToken($token);
