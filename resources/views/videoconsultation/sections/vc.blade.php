@@ -9,6 +9,7 @@
         roomName: '{{ $vc->secret }}',
         width: '100%',
         height: '100%',
+        lang: '{{ config('app.locale') }}',
         parentNode: document.getElementById('vc'),
         @if($token)
             jwt: '{{ $token }}',

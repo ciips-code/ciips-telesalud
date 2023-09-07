@@ -4,6 +4,8 @@ services:
         build:
             context: .
             dockerfile: dockerfiles/app.dev.dockerfile
+            args:
+              - UID=${WWW_DATA_UID-1000}
         working_dir: /var/www
         volumes:
             - ./:/var/www
