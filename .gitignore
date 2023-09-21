@@ -18,3 +18,4 @@ yarn-error.log
 
 docker-config/cert.crt
 docker-config/cert.key
+docker-compose.yml
