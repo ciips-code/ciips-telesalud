@@ -7,6 +7,9 @@ services:
         working_dir: /var/www
         depends_on:
             - "database"
+        volumes:
+            - ./.env:/var/www/.env
+            - tc-storage:/var/www/storage/app
 
     web:
         build:
@@ -17,7 +20,12 @@ services:
             - "app"
         ports:
             - ${WEB_LISTEN_PORT:-80}:80
-            - ${WEB_HTTPS_LISTEN_PORT:-80}:443
+            - ${WEB_HTTPS_LISTEN_PORT:-443}:443
+        networks:
+          default:
+          frontend:
+            aliases:
+              - telesalud-frontend
 
     database:
         image: mysql:8.0
@@ -32,3 +40,10 @@ services:
             - ${DB_LISTEN_PORT:-3306}:3306
 volumes:
     dbdata:
+    tc-storage:
+
+networks:
+  # Remove this network and its references if you don't need a reverse-proxy
+  frontend:
+    external: true
+    name: frontend

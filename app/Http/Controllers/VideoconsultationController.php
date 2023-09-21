@@ -9,6 +9,7 @@ use App\Models\Videoconsultation;
 use App\Models\VideoconsultationChat;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -170,7 +171,9 @@ class VideoconsultationController extends Controller
             abort(404);
         }
 
-        return Storage::download($file->file_name, Str::slug($file->description));
+        $fileName = Str::slug($file->description) . '.' . File::extension($file->file_name);
+
+        return Storage::download($file->file_name, $fileName);
     }
 
     public function setMedicAttendance(MedicRequest $request) {
