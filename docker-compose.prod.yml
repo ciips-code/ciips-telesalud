@@ -7,6 +7,9 @@ services:
         working_dir: /var/www
         depends_on:
             - "database"
+        volumes:
+            - ./.env:/var/www/.env
+            - tc-storage:/var/www/storage/app
 
     web:
         build:
@@ -37,6 +40,7 @@ services:
             - ${DB_LISTEN_PORT:-3306}:3306
 volumes:
     dbdata:
+    tc-storage:
 
 networks:
   # Remove this network and its references if you don't need a reverse-proxy

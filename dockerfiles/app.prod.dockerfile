@@ -23,3 +23,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 
 RUN echo 'post_max_size = 32M' >> "$PHP_INI_DIR/conf.d/docker-env.ini"
 RUN echo 'upload_max_filesize = 32M' >> "$PHP_INI_DIR/conf.d/docker-env.ini"
+
+USER www-data
+
+RUN cd /var/www && composer install
