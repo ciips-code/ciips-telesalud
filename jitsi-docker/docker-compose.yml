@@ -147,7 +147,9 @@ services:
             - XMPP_PORT
         networks:
             meet.jitsi:
-
+            frontend:
+                aliases:
+                    - telesalud-backend
     # XMPP server
     prosody:
         image: jitsi/prosody:${JITSI_IMAGE_VERSION:-stable-7648-4}
@@ -333,3 +335,7 @@ services:
 # Custom network so all services can communicate using a FQDN
 networks:
     meet.jitsi:
+    # Remove this network and its references if you don't need a reverse-proxy
+    frontend:
+        name: frontend
+        external: true
