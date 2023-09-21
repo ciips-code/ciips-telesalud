@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y  \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_mysql zip bcmath -j$(nproc) gd
 
+RUN chown -R www-data:www-data /var/www
 COPY --chown=www-data:www-data . /var/www
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
@@ -27,3 +28,5 @@ RUN echo 'upload_max_filesize = 32M' >> "$PHP_INI_DIR/conf.d/docker-env.ini"
 USER www-data
 
 RUN cd /var/www && composer install
+
+WORKDIR /var/www

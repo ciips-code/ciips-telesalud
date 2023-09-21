@@ -8,7 +8,6 @@
   * Para uso en servidor local, puede generar un certificado auto firmado: `openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout docker-config/cert.key -out docker-config/cert.crt`
 * Ejecutar `docker-compose up` (puede agregar `-d` para ejecutar en modo dettached)
 * Por única vez, ejecutar:
-  * `docker-compose exec app composer install`. Esto instalará librerías externas
   * `docker-compose exec app php artisan key:generate`. Esto generará una clave única de Laravel
   * `docker-compose exec app php artisan migrate`. Esto creará las tablas necesarias en la base de datos
 
@@ -55,7 +54,6 @@ Los estilos CSS están basados en [Bulma](https://bulma.io/). Para personalizar 
   * To run in localhost, you can generate a self-signed certificate: `openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout docker-config/cert.key -out docker-config/cert.crt`
 * Run `docker-compose up` (You can add `-d` to run in dettached mode)
 * Just the first time, run:
-  * `docker-compose exec app composer install`. This will install external libraries
   * `docker-compose exec app php artisan key:generate`. This will generate your Laravel instance's `APP KEY`
   * `docker-compose exec app php artisan migrate`. This will create necesary tables in the database
 
